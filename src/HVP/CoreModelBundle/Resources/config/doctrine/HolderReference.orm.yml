@@ -1,0 +1,26 @@
+HVP\CoreModelBundle\Entity\HolderReference:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        ident:
+            type: string
+            length: 255
+        type:
+            type: string
+            length: '32'
+        active:
+            type: boolean
+    manyToOne:
+        Holder:
+            targetEntity: Holder
+            inversedBy: HolderReferences
+            joinColumn:
+                name: holder_id
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

@@ -1,0 +1,32 @@
+HVP\CoreModelBundle\Entity\ProductEventInstance:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        eventChange:
+            type: string
+            length: 255
+        processed:
+            type: datetimetz
+            nullable: true
+        ts:
+            type: datetimetz
+    manyToOne:
+        ProductEvent:
+            targetEntity: ProductEvent
+            inversedBy: ProductEventInstances
+            joinColumn:
+                name: product_event_id
+                referencedColumnName: id
+        ProductInstance:
+            targetEntity: ProductInstance
+            inversedBy: ProductEventInstances
+            joinColumn:
+                name: product_instance_id
+                referencedColumnName: id				
+    lifecycleCallbacks: {  }

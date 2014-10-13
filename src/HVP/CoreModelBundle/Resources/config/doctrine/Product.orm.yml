@@ -1,0 +1,24 @@
+HVP\CoreModelBundle\Entity\Product:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        type:
+            type: string
+            length: '32'
+    oneToMany:
+        ProductInstances:
+            targetEntity: ProductInstance
+            mappedBy: Product
+        ProductEvents:
+            targetEntity: ProductEvent
+            mappedBy: Product	
+    lifecycleCallbacks: {  }

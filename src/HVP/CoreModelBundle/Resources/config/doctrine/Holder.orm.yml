@@ -1,0 +1,17 @@
+HVP\CoreModelBundle\Entity\Holder:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    oneToMany:
+        HolderReferences:
+            targetEntity: HolderReference
+            mappedBy: Holder
+        ProductInstances:
+            targetEntity: ProductInstance
+            mappedBy: Holder
+    lifecycleCallbacks: {  }

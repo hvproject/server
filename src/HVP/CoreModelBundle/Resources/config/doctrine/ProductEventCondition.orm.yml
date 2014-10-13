@@ -1,0 +1,30 @@
+HVP\CoreModelBundle\Entity\ProductEventCondition:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        instanceValue:
+            type: string
+            length: 255
+        comperator:
+            type: string
+            length: '8'
+        conditionValue:
+            type: string
+            length: 255
+        combinator:
+            type: string
+            length: '8'
+    manyToOne:
+        ProductEvent:
+            targetEntity: ProductEvent
+            inversedBy: ProductEventConditions
+            joinColumn:
+                name: product_event_id
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

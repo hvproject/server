@@ -1,0 +1,14 @@
+HVP\CoreModelBundle\Model\ProductEventInstance:
+  exclusion_policy: ALL
+  xml_root_name: productEventInstance
+  properties:
+    product_event_id:
+      expose: true
+    product_instance_id:
+      expose: true
+    processed:
+      expose: true
+    eventChange:
+      expose: true
+    ts:
+      expose: true

@@ -1,0 +1,10 @@
+HVP\CoreModelBundle\Model\HolderReference:
+  exclusion_policy: ALL
+  xml_root_name: ref
+  properties:
+    ident:
+      expose: true
+    type:
+      expose: true
+    active:
+      expose: true

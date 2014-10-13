@@ -1,0 +1,34 @@
+HVP\CoreModelBundle\Entity\ProductEvent:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: '64'
+        summ:
+            type: string
+            length: 255
+    oneToMany:
+        ProductEventActions:
+            targetEntity: ProductEventAction
+            mappedBy: ProductEvent
+        ProductEventConditions:
+            targetEntity: ProductEventCondition
+            mappedBy: ProductEvent
+        ProductEventInstances:
+            targetEntity: ProductEventInstance
+            mappedBy: ProductEvent
+    manyToOne:
+        Product:
+            targetEntity: Product
+            inversedBy: ProductEvents
+            joinColumn:
+                name: product_id
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

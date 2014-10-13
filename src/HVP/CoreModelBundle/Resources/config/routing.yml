@@ -1,0 +1,3 @@
+hvp_core_model_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: HVPCoreModelBundle:Default:index }

@@ -1,0 +1,12 @@
+HVP\CoreModelBundle\Model\Holder:
+  exclusion_policy: ALL
+  xml_root_name: holder
+  properties:
+    id:
+      expose: true
+    holderReferences:
+      expose: true
+      max_depth: 0
+    productInstances:
+      expose: true
+      max_depth: 0
