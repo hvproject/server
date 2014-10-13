@@ -87,7 +87,7 @@ class ProductEventInstanceController extends FOSRestController
 		$eventInstance = new ProductEventInstance();
 		$eventInstance->setProductInstance($productInstance);		
 		$eventInstance->setProductEvent($productEvent);
-		$eventInstance->setEventChange($change);
+		$eventInstance->setEventChange(json_encode($change));
 		$eventInstance->setTs(new \DateTime('@'.$timestamp));
 		$em->persist($eventInstance);
 		$em->flush();
@@ -108,21 +108,24 @@ class ProductEventInstanceController extends FOSRestController
 	{
 		$value	= $productInstance->getValue();
 		$change = $eventInstance->getEventChange();
-
-		if(stripos($change,'-') === 0){
-			$changeVal = str_ireplace('-','',$change);
-			$newVal = $value - $changeVal;
-		}elseif(stripos($change,'=') === 0){
-			$changeVal = str_ireplace('=','',$change);
-			$newVal = $changeVal;
-		}elseif(stripos($change,' ') === 0){
-			$changeVal = str_ireplace(' ','',$change);
-			$newVal = $value + $changeVal;
-		}else{
-			die('invalid change operator: '.$change);
-		}
+		$changaArr = json_decode($change);
 		
-		$productInstance->setValue($newVal);
+		foreach($changaArr as $change){
+			if(stripos($change,'-') === 0){
+				$changeVal = str_ireplace('-','',$change);
+				$newVal = $value - $changeVal;
+			}elseif(stripos($change,'=') === 0){
+				$changeVal = str_ireplace('=','',$change);
+				$newVal = $changeVal;
+			}elseif(stripos($change,' ') === 0){
+				$changeVal = str_ireplace(' ','',$change);
+				$newVal = $value + $changeVal;
+			}else{
+				die('invalid change operator: '.$change);
+			}
+		
+			$productInstance->setValue($newVal);	
+		}
 		
 		return $productInstance;
 	}
