@@ -3,8 +3,7 @@ Holder Validation Server
 
 This is the Holder Validation Server, a Symfony2 application holding:
 
-  * HVP Core Models
-  * * Holders
+  * Holders
   * * HolderReferences
   * Products
   * * ProductEvents
