@@ -75,6 +75,8 @@ class ProductEventInstanceController extends FOSRestController
         $timestamp =  $this->get('request')->request->get('timestamp');
 		if(!$timestamp)
 			die('no timestamp param set');
+		else
+			$timestamp = round(intVal($timestamp) / 1000); // JS Submits Milliseconds
 
         $em = $this->getDoctrine()->getManager();
 		$sr = new ProductEventInstanceSerializer();
