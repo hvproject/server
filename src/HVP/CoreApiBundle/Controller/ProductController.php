@@ -6,6 +6,7 @@ use FOS\RestBundle\Util\Codes;
 
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\View\RouteRedirectView;
 
 use FOS\RestBundle\View\View;
@@ -35,6 +36,7 @@ class ProductController extends FOSRestController
      *     200 = "Returned when successful"
      *   }
      * )
+	 * @Get("/products")
      */
     public function getProductsAction(Request $request)
     {
@@ -56,6 +58,7 @@ class ProductController extends FOSRestController
      *     404 = "Returned when the product is not found"
      *   }
      * )
+	 * @Get("/products/{id}")
      */
     public function getProductAction(Request $request, $id)
     {

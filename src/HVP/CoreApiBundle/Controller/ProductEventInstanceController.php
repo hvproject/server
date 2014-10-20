@@ -5,6 +5,8 @@ namespace HVP\CoreApiBundle\Controller;
 use FOS\RestBundle\Util\Codes;
 
 use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\RouteRedirectView;
 
@@ -37,6 +39,7 @@ class ProductEventInstanceController extends FOSRestController
      *     200 = "Returned when successful"
      *   }
      * )
+	 * @Get("/products/events/instances")
      */
     public function getProductEventInstancesAction(Request $request)
     {
@@ -57,6 +60,7 @@ class ProductEventInstanceController extends FOSRestController
      *     200 = "Returned when processed successful"
      *   }
      * )
+	 * @Post("/products/events/instances")
      */
     public function postProductEventInstanceAction(Request $request)
     {

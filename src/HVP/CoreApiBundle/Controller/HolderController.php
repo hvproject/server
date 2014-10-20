@@ -6,6 +6,7 @@ use FOS\RestBundle\Util\Codes;
 
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\View\RouteRedirectView;
 
 use FOS\RestBundle\View\View;
@@ -35,12 +36,20 @@ class HolderController extends FOSRestController
      *     200 = "Returned when successful"
      *   }
      * )
+	 * @Get("/holders")
      */
     public function getHoldersAction(Request $request)
     {
 
         $em = $this->getDoctrine()->getManager();
-		$sr = new HolderSerializer(array('incProductInstances'));
+		
+		$srOpts = array();
+		if($this->get('request')->request->get('incHolderReferences'))
+			$srOpts[]	= 'incHolderReferences';
+		if($this->get('request')->request->get('incProductInstances'))
+			$srOpts[]	= 'incProductInstances';
+		
+		$sr = new HolderSerializer($this->parseSrOpts());
         
         $holders = $em->getRepository('HVPCoreModelBundle:Holder')->findAll();
 		
@@ -57,6 +66,7 @@ class HolderController extends FOSRestController
      *     404 = "Returned when the note is not found"
      *   }
      * )
+	 * @Get("/holders/{id}")
      */
     public function getHolderAction(Request $request, $id)
     {
@@ -72,4 +82,14 @@ class HolderController extends FOSRestController
 	    return $this->handleView($this->view($sr->convert($holder), 200));
     }
 	
+	private function parseSrOpts(){
+		$srOpts = array();
+		
+		if($this->get('request')->query->get('incHolderReferences'))
+			$srOpts[]	= 'incHolderReferences';
+		if($this->get('request')->query->get('incProductInstances'))
+			$srOpts[]	= 'incProductInstances';
+		
+		return $srOpts;	
+	}
   }

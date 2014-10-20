@@ -8,6 +8,7 @@ use FOS\RestBundle\Util\Codes;
 
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\RouteRedirectView;
 
@@ -38,6 +39,7 @@ class HolderReferenceController extends FOSRestController
      *     200 = "Returned when successful"
      *   }
      * )
+	 * @Get("/holders/references")
      */
     public function getHolderReferencesAction(Request $request)
     {
@@ -75,6 +77,7 @@ class HolderReferenceController extends FOSRestController
      *     404 = "Returned when the note is not found"
      *   }
      * )
+	 * @Get("/holders/references/{id}")
      */
     public function getHolderReferenceAction(Request $request, $id)
     {
