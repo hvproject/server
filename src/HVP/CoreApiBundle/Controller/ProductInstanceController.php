@@ -37,6 +37,7 @@ class ProductInstanceController extends FOSRestController
      *   }
      * )
 	 * @Get("/products/instances")
+	 * @Get("/1/products/instances", name="_API1")
      */
     public function getProductInstancesAction(Request $request)
     {
@@ -59,6 +60,7 @@ class ProductInstanceController extends FOSRestController
      *   }
      * )
 	 * @Get("/products/instances/{id}")
+	 * @Get("/1/products/instances/{id}", name="_API1")
      */
     public function getProductInstanceAction(Request $request, $id)
     {

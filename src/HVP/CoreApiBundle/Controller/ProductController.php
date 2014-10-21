@@ -37,6 +37,7 @@ class ProductController extends FOSRestController
      *   }
      * )
 	 * @Get("/products")
+	 * @Get("/1/products", name="_API1")
      */
     public function getProductsAction(Request $request)
     {
@@ -59,6 +60,7 @@ class ProductController extends FOSRestController
      *   }
      * )
 	 * @Get("/products/{id}")
+	 * @Get("/1/products/{id}", name="_API1")
      */
     public function getProductAction(Request $request, $id)
     {

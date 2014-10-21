@@ -40,6 +40,7 @@ class HolderReferenceController extends FOSRestController
      *   }
      * )
 	 * @Get("/holders/references")
+	 * @Get("/1/holders/references", name="_API1")
      */
     public function getHolderReferencesAction(Request $request)
     {
@@ -78,6 +79,7 @@ class HolderReferenceController extends FOSRestController
      *   }
      * )
 	 * @Get("/holders/references/{id}")
+	 * @Get("/1/holders/references/{id}", name="_API1")
      */
     public function getHolderReferenceAction(Request $request, $id)
     {

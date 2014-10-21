@@ -37,6 +37,7 @@ class HolderController extends FOSRestController
      *   }
      * )
 	 * @Get("/holders")
+	 * @Get("/1/holders", name="__API1")
      */
     public function getHoldersAction(Request $request)
     {
@@ -67,6 +68,7 @@ class HolderController extends FOSRestController
      *   }
      * )
 	 * @Get("/holders/{id}")
+	 * @Get("/1/holders/{id}", name="__API1")
      */
     public function getHolderAction(Request $request, $id)
     {

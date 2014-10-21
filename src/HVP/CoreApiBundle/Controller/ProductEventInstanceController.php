@@ -40,6 +40,7 @@ class ProductEventInstanceController extends FOSRestController
      *   }
      * )
 	 * @Get("/products/events/instances")
+	 * @Get("/1/products/events/instances", name="_API1")
      */
     public function getProductEventInstancesAction(Request $request)
     {
@@ -61,6 +62,7 @@ class ProductEventInstanceController extends FOSRestController
      *   }
      * )
 	 * @Post("/products/events/instances")
+	 * @Post("/1/products/events/instances", name="_API1")
      */
     public function postProductEventInstanceAction(Request $request)
     {
