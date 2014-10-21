@@ -1,15 +1,19 @@
+hvp_core_api_holder_reference:
+    resource: "@HVPCoreApiBundle/Controller/HolderReferenceController.php"
+    type:     rest
+
 hvp_core_api_holder:
     resource: "@HVPCoreApiBundle/Controller/HolderController.php"
     type:     rest
     
-hvp_core_api_holder_reference:
-    resource: "@HVPCoreApiBundle/Controller/HolderReferenceController.php"
-    type:     rest
-    
-hvp_core_api_product:
-    resource: "@HVPCoreApiBundle/Controller/ProductController.php"
+hvp_core_api_product_instances:
+    resource: "@HVPCoreApiBundle/Controller/ProductInstanceController.php"
     type:     rest
 
 hvp_core_api_product_event_instances:
     resource: "@HVPCoreApiBundle/Controller/ProductEventInstanceController.php"
+    type:     rest
+        
+hvp_core_api_product:
+    resource: "@HVPCoreApiBundle/Controller/ProductController.php"
     type:     rest
