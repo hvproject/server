@@ -19,6 +19,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use HVP\CoreModelBundle\Entity\ProductEventInstance;
 
+use HVP\CoreApiBundle\Filter\ProductEventInstanceFilterType;
+
 use HVP\CoreApiBundle\Serializers\ProductEventInstanceSerializer;
 
 /**
@@ -45,10 +47,55 @@ class ProductEventInstanceController extends FOSRestController
     {
         $em = $this->getDoctrine()->getManager();
 		$sr = new ProductEventInstanceSerializer();
+
+        $filteredBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('HVPCoreModelBundle:ProductEventInstance')
+            ->createQueryBuilder('pei');
         
-        $eventInstances = $em->getRepository('HVPCoreModelBundle:ProductEventInstance')->findAll();
+        $form = $this->get('form.factory')->create(new ProductEventInstanceFilterType());
+        
+        if ($this->get('request')->query->has($form->getName())) {
+           $form->submit($this->get('request')->query->get($form->getName()));
+           $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filteredBuilder);
+        }
+        
+		$query = $filteredBuilder->getQuery();
+		$eventInstances = $query->getResult();        
 
 	    return $this->handleView($this->view($sr->batch($eventInstances), 200));
+    }
+
+    /**
+     * Count all Events.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
+	 * @Get("/products/events/instances/count")
+     */
+    public function getProductEventInstanceCountAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+		$sr = new ProductEventInstanceSerializer();
+
+        $filteredBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('HVPCoreModelBundle:ProductEventInstance')
+            ->createQueryBuilder('pei');
+	    $filteredBuilder->select('count(pei)');
+        
+        $form = $this->get('form.factory')->create(new ProductEventInstanceFilterType());
+        
+        if ($this->get('request')->query->has($form->getName())) {
+           $form->submit($this->get('request')->query->get($form->getName()));
+           $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filteredBuilder);
+        }
+        
+		$eventInstancesCount = $filteredBuilder->getQuery()->getSingleScalarResult();       
+
+	    return $this->handleView($this->view(array("num"=>$eventInstancesCount), 200));
     }
 
     /**
