@@ -9,6 +9,7 @@ use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\RouteRedirectView;
 
@@ -19,7 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use HVP\CoreApiBundle\Form\HolderReferenceType;
+
 use HVP\CoreApiBundle\Serializers\HolderReferenceSerializer;
+use HVP\CoreApiBundle\Deserializers\HolderReferenceDeserializer;
 
 /**
  * Rest controller for HolderReferences
@@ -91,5 +95,48 @@ class HolderReferenceController extends FOSRestController
         }
 
 	    return $this->handleView($this->view($sr->convert($holderReference), 200));
+    }
+	
+    /**
+     * Update a single HolderReference.
+     *
+     * @ApiDoc(
+     *   output = "HVP\CoreModelBundle\Model\HolderReference",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the note is not found"
+     *   }
+     * )
+	 * @Post("/holders/references/{id}")
+     */
+    public function postHolderReferenceAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+		$sr = new HolderReferenceSerializer(array('incHolders'));
+		$dsr = new HolderReferenceDeserializer($em);
+      
+        $holderReference = $em->getRepository('HVPCoreModelBundle:HolderReference')->find($id);
+		if (false === $holderReference) {
+			throw $this->createNotFoundException("Holder reference does not exist.");
+		}
+		
+		$params = $this->get('request')->request->all();
+		
+		$holderReference = $dsr->convert($params, $holderReference);
+		
+		$ret = $sr->convert($holderReference);
+		
+		$em->persist($holderReference);
+
+		if ($em->flush()) {
+			$ret['UPDATE'] = 'OK';
+			$st = 200;
+		}else{
+			$ret['UPDATE'] = 'ERR';
+			$ret['MESSAGE']= 'FLUSH_FAILED';
+			$st = 500;
+		}
+
+	    return $this->handleView($this->view($ret), $st);
     }
   }
