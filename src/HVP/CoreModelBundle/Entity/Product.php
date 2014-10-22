@@ -164,4 +164,60 @@ class Product
     {
         return $this->ProductEvents;
     }
+    /**
+     * @var string
+     */
+    private $extId;
+
+    /**
+     * @var string
+     */
+    private $extType;
+
+
+    /**
+     * Set extId
+     *
+     * @param string $extId
+     * @return Product
+     */
+    public function setExtId($extId)
+    {
+        $this->extId = $extId;
+
+        return $this;
+    }
+
+    /**
+     * Get extId
+     *
+     * @return string 
+     */
+    public function getExtId()
+    {
+        return $this->extId;
+    }
+
+    /**
+     * Set extType
+     *
+     * @param string $extType
+     * @return Product
+     */
+    public function setExtType($extType)
+    {
+        $this->extType = $extType;
+
+        return $this;
+    }
+
+    /**
+     * Get extType
+     *
+     * @return string 
+     */
+    public function getExtType()
+    {
+        return $this->extType;
+    }
 }

@@ -16,6 +16,12 @@ HVP\CoreModelBundle\Entity\HolderReference:
             length: '32'
         active:
             type: boolean
+        extId:
+            type: string
+            length: '100'
+        extType:
+            type: string
+            length: '32'
     manyToOne:
         Holder:
             targetEntity: Holder

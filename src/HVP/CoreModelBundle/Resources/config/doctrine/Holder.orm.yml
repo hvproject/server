@@ -7,6 +7,13 @@ HVP\CoreModelBundle\Entity\Holder:
             id: true
             generator:
                 strategy: AUTO
+    fields:
+        extId:
+            type: string
+            length: '100'
+        extType:
+            type: string
+            length: '32'
     oneToMany:
         HolderReferences:
             targetEntity: HolderReference
