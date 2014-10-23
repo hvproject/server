@@ -8,17 +8,17 @@ class HolderReferenceDeserializer extends AbstractDeserializer
 {
 	public function convert($object, $targetObject)
 	{
-		if($object['holderID'])
+		if(isset($object['holderID']))
 			if($holder = $this->em->getRepository('HVPCoreModelBundle:Holder')->find($object['holderID']))
 			$targetObject->setHolder($holder);
 		
-		if($object['ident'])	
+		if(isset($object['ident']))	
 			$targetObject->setIdent($object['ident']);
 		
-		if($object['type'])	
+		if(isset($object['type']))	
 			$targetObject->setType($object['type']);
 		
-		if($object['active'])	
+		if(isset($object['active']))	
 			$targetObject->setActive(intVal($object['active']));
 
 		return $targetObject;

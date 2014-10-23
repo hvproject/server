@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use HVP\CoreModelBundle\Entity\HolderReference;
+
 use HVP\CoreApiBundle\Form\HolderReferenceType;
 
 use HVP\CoreApiBundle\Serializers\HolderReferenceSerializer;
@@ -107,15 +109,20 @@ class HolderReferenceController extends FOSRestController
      *     404 = "Returned when the note is not found"
      *   }
      * )
-	 * @Post("/holders/references/{id}")
+	 * @Post("/holders/references", name="_new")
+	 * @Post("/holders/references/{id}", name="_update")
      */
-    public function postHolderReferenceAction(Request $request, $id)
+    public function postHolderReferenceAction(Request $request, $id = false)
     {
         $em = $this->getDoctrine()->getManager();
 		$sr = new HolderReferenceSerializer(array('incHolders'));
 		$dsr = new HolderReferenceDeserializer($em);
-      
-        $holderReference = $em->getRepository('HVPCoreModelBundle:HolderReference')->find($id);
+      	
+		if(!$id)
+			$holderReference = new HolderReference();
+		else
+		    $holderReference = $em->getRepository('HVPCoreModelBundle:HolderReference')->find($id);
+
 		if (false === $holderReference) {
 			throw $this->createNotFoundException("Holder reference does not exist.");
 		}
@@ -124,15 +131,21 @@ class HolderReferenceController extends FOSRestController
 		
 		$holderReference = $dsr->convert($params, $holderReference);
 		
-		$ret = $sr->convert($holderReference);
-		
 		$em->persist($holderReference);
-
-		if ($em->flush()) {
-			$ret['UPDATE'] = 'OK';
+		
+		if ($em->flush() == null) {
+			$ret = $sr->convert($holderReference);
+			if($id)
+				$ret['UPDATE'] = 'OK';
+			else
+				$ret['INSERT'] = 'OK';
 			$st = 200;
 		}else{
-			$ret['UPDATE'] = 'ERR';
+			$ret = $sr->convert($holderReference);
+			if($id)
+				$ret['UPDATE'] = 'ERR';
+			else
+				$ret['INSERT'] = 'ERR';
 			$ret['MESSAGE']= 'FLUSH_FAILED';
 			$st = 500;
 		}
