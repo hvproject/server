@@ -10,7 +10,10 @@ class HolderReferenceSerializer extends AbstractSerializer
 	{
 		$ret 			= array();
 		$ret['ID']		= $object->getId();
-		$ret['holderID']= $object->getHolder()->getId();
+		if($object->getHolder())
+			$ret['holderID'] = $object->getHolder()->getId();
+		else
+			$ret['holderID'] = null;
 		$ret['ident']	= $object->getIdent();
 		$ret['type']	= $object->getType();
 		$ret['active']	= $object->getActive();
