@@ -48,12 +48,16 @@ class HolderController extends FOSRestController
 			$srOpts[]	= 'incHolderReferences';
 		if($this->get('request')->request->get('incProductInstances'))
 			$srOpts[]	= 'incProductInstances';
-		
-		$sr = new HolderSerializer($this->parseSrOpts());
-        
+ 
         $holders = $em->getRepository('HVPCoreModelBundle:Holder')->findAll();
-		
-	    return $this->handleView($this->view($sr->batch($holders), 200));
+ 		
+		if(count($srOpts) > 0){
+			$sr = new HolderSerializer($this->parseSrOpts());
+   		
+		    return $this->handleView($this->view($sr->batch($holders), 200));
+		}else{
+		    return $this->handleView($this->view($holders, 200));			
+		}
     }
 
     /**
